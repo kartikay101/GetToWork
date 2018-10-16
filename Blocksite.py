@@ -1,19 +1,23 @@
 import time
-from enum import Enum
+import os
 from datetime import datetime as dt
 
-class OS(Enum):
-    def checkPlatform(osName):
-        return osName.lower()== platform.system().lower()
-
-    MAC = checkPlatform("darwin")
-    LINUX = checkPlatform("linux")
-    WINDOWS = checkPlatform("windows")
-
-if OS.MAC or OS.LINUX:
+#class OS(Enum):
+#    def checkPlatform(osName):
+#        return osName.lower()== platform.system().lower()
+#
+#    MAC = checkPlatform("darwin")
+#    LINUX = checkPlatform("linux")
+#    WINDOWS = checkPlatform("windows")
+#
+#if OS.MAC or OS.LINUX:
+if os.name == 'mac':
     hosts_file=("/private/etc/hosts")
-elif OS.WINDOWS:
+elif os.name == 'nt':
     hosts_file=r"C:\Windows\System32\Drivers\etc\hosts"
+
+#elif OS.WINDOWS:
+#    hosts_file=r"C:\Windows\System32\Drivers\etc\hosts"
 
 
 
