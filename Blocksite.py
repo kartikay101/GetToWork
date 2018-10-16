@@ -1,4 +1,5 @@
 import time
+import os
 from datetime import datetime as dt
 
 #class OS(Enum):
@@ -9,13 +10,10 @@ from datetime import datetime as dt
 #    LINUX = checkPlatform("linux")
 #    WINDOWS = checkPlatform("windows")
 #
-#if OS.MAC or OS.LINUX:
-
-hosts_file=("/private/etc/hosts")
-
-
-#elif OS.WINDOWS:
-#    hosts_file=r"C:\Windows\System32\Drivers\etc\hosts"
+if os.name == 'posix':
+    hosts_file=("/private/etc/hosts")
+elif os.name == 'nt':
+    hosts_file=r"C:\Windows\System32\Drivers\etc\hosts"
 
 
 
