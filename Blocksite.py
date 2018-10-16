@@ -1,12 +1,20 @@
 import time
 from datetime import datetime as dt
 
-hosts_file = ("/private/etc/hosts")
-local="127.0.0.1"
-website_list=["www.facebook.com","facebook.com","www.twitter.com","twitter.com"]
+hosts_file=("/private/etc/hosts")
 
-while True:
-    if dt(dt.now().year,dt.now().month,dt.now().day,9) < dt.now() < dt(dt.now().year,dt.now().month,dt.now().day,17):
+local="127.0.0.1"
+website_list=["www.facebook.com"]
+
+stime=9
+etime=17
+
+def start():
+ global website_list
+ global stime
+ global etime
+ while True:
+    if dt(dt.now().year,dt.now().month,dt.now().day,stime) < dt.now() < dt(dt.now().year,dt.now().month,dt.now().day,etime):
         with open(hosts_file,'r+') as file:
             content=file.read()
             for website in website_list:
@@ -22,4 +30,8 @@ while True:
                 if not any(website in line for website in website_list):
                     file.write(line)
             file.truncate()
-    time.sleep(120)
+    break
+    time.sleep(720)
+
+
+
