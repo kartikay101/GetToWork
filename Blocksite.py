@@ -1,7 +1,21 @@
 import time
+from enum import Enum
 from datetime import datetime as dt
 
-hosts_file=("/private/etc/hosts")
+class OS(Enum):
+    def checkPlatform(osName):
+        return osName.lower()== platform.system().lower()
+
+    MAC = checkPlatform("darwin")
+    LINUX = checkPlatform("linux")
+    WINDOWS = checkPlatform("windows")
+
+if OS.MAC or OS.LINUX:
+    hosts_file=("/private/etc/hosts")
+elif OS.WINDOWS:
+    hosts_file=r"C:\Windows\System32\Drivers\etc\hosts"
+
+
 
 local="127.0.0.1"
 website_list=["www.facebook.com"]
