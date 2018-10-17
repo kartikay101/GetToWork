@@ -1,4 +1,5 @@
 import tkinter
+from datetime import datetime as dt
 from tkinter import *
 import Blocksite
 
@@ -6,23 +7,32 @@ import Blocksite
 
 def onadd():
     u=(str(e1.get()))
-    Blocksite.website_list.append(u)
     z=(str(e3.get()))
     c = int(z)
     Blocksite.stime=c
-
     y=(str(e2.get()))
     d = int(y)
     Blocksite.etime=d
+    if dt.now()<dt(dt.now().year,dt.now().month,dt.now().day,d): # only add if endtime is > current time
+        if u not in Blocksite.website_list: # do not add more than once to the list
+            Blocksite.website_list.append(u)
+        else:
+            print("Already There")
+    else:
+        print("Bad End Time")
 def onremove():
     v=str(e1.get())
-    Blocksite.website_list.remove(v)
+    try:                # only removing if there is a value
+        Blocksite.website_list.remove(v)
+        Blocksite.remover(v)
+    except Exception as e:
+        print("Not In Blocklist")
 def view():
-    print(Blocksite.website_list)
-    print(Blocksite.stime)
-    print(Blocksite.etime)
+    print("Sites being Blocked:") # better view method
+    for sites in Blocksite.website_list:
+        print('\033[91m'+sites+'\033[0m')
 def starting():
-    Blocksite.start()
+    Blocksite.start() # suggesting thread implementation so that last add/remove does not affect the current add/remove function
 
 window = tkinter.Tk()
 window.configure(background="#a1dbcd")
@@ -30,7 +40,7 @@ window.configure(background="#a1dbcd")
 window.title("WebsiteBlocker")
 
 
-photo = tkinter.PhotoImage(file="hqdefault.ppm")
+photo = tkinter.PhotoImage(file="hqdefault.PPM")
 w = tkinter.Label(window, image=photo)
 w.pack()
 
