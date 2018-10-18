@@ -8,6 +8,7 @@ import Blocksite
 def onadd():
     u=(str(e1.get()))
     z=(str(e3.get()))
+    y=(str(e2.get()))
     c=0
     d=0
     try:
@@ -16,7 +17,6 @@ def onadd():
     except Exception as e:
         print("Please Enter The times correctly")
     Blocksite.stime=c
-    y=(str(e2.get()))
     Blocksite.etime=d
     if dt.now()<dt(dt.now().year,dt.now().month,dt.now().day,d): # only add if endtime is > current time
         if u not in Blocksite.website_list: # do not add more than once to the list
