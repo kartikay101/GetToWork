@@ -21,15 +21,16 @@ elif os.name == 'nt':
 local="127.0.0.1"
 website_list=[] # empty is better
 
-stime=9
-etime=17
+stime=0
+etime=0
 
 def start():
  global website_list
  global stime
  global etime
- while True:
-    if dt(dt.now().year,dt.now().month,dt.now().day,stime) < dt.now() < dt(dt.now().year,dt.now().month,dt.now().day,etime):
+ while len(website_list)>0 :
+    if dt.now()>stime and dt.now()<etime:
+        print("here")
         with open(hosts_file,'r+') as file:
             content=file.read()
             for website in website_list:
@@ -45,8 +46,9 @@ def start():
                 if not any(website in line for website in website_list):
                     file.write(line)
             file.truncate()
-    break
-    time.sleep(720)
+            website_list=[]
+            break
+    time.sleep(10)
 
 def remover(value):  # added for instant removal of site from the list
     with open(hosts_file,'r+') as file:

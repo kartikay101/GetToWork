@@ -1,5 +1,6 @@
 import tkinter
 from datetime import datetime as dt
+from datetime import timedelta
 from tkinter import *
 import Blocksite
 
@@ -16,29 +17,34 @@ def onadd():
         d = int(y)
     except Exception as e:
         print("Please Enter The times correctly")
-    Blocksite.stime=c
-    Blocksite.etime=d
-    if dt.now()<dt(dt.now().year,dt.now().month,dt.now().day,d): # only add if endtime is > current time
-        if u not in Blocksite.website_list: # do not add more than once to the list
-            Blocksite.website_list.append(u)
-        else:
-            print("Already There")
+    Blocksite.stime=dt.now()
+    Blocksite.etime=dt.now() + timedelta(seconds=d)  # currently waits only for d seconds can be changed to hours or minutes
+    if u not in Blocksite.website_list: # do not add more than once to the list
+        Blocksite.website_list.append(u)
+        print("Adding "+u+" To Blocklist")
     else:
-        print("Bad End Time")
+        print("Already In Blocklist")
 def onremove():
     v=str(e1.get())
     try:                # only removing if there is a value
         Blocksite.website_list.remove(v)
         Blocksite.remover(v)
+        print("Removing "+v+" From Blocklist")
     except Exception as e:
         print("Not In Blocklist")
 def view():
-    print("Sites being Blocked:") # better view method
-    for sites in Blocksite.website_list:
-        print('\033[91m'+sites+'\033[0m')
+    list=Blocksite.website_list
+    if len(list)>0:
+        print("Sites being Blocked:") # better view method
+        for sites in Blocksite.website_list:
+            print('\033[91m'+sites+'\033[0m')
+    else:
+        print("Blocklist Empty")
 def starting():
-    Blocksite.start() # suggesting thread implementation so that last add/remove does not affect the current add/remove function
-
+    if len(Blocksite.website_list)>0:
+        Blocksite.start() # suggesting thread implementation so that last add/remove does not affect the current add/remove function
+    else:
+        print("Start failed Blocklist Empty")
 window = tkinter.Tk()
 window.configure(background="#a1dbcd")
 
